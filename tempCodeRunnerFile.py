@@ -1,25 +1,8 @@
-# 1. Create your raw_sales list
-raw_sales = [25.50,"error",40.00, 15.75, "missing",100.00]
+with open("r/Users/eugeniaportillo/Library/Mobile\ Documents/com\~apple\~TextEdit/Documents/raw_sales.csv.txt", mode="r", newline="", encoding="utf-8") as file:
+    reader = csv.reader(file)
+    header = next(reader)
 
-# 2-4. Define your clean_and_sum function here
-def clean_and_sum(sales_list):
-    clean_data = []
-    for item in sales_list:
-        try:
-            #attempting conversion
-            val = float(item)
-            clean_data.append(val)
-        except ValueError:
-            #Skipping strings or missing values
-            continue
-        total_val = sum(clean_data)
-#logic to avoid ZeroDivisionError if the lsit was all junk
-    if len(clean_data) > 0:
-        avg_val = total_val / len(clean_data)
-    else:
-        avg_val = 0
-    return {"total": total_val, "average": avg_val}
-
-# Final: Call your function with raw_sales and print the result
-
-print(clean_and_sum(raw_sales))
+    print("Header:", header)
+    print("\nRaw rows:\n")
+    for row in reader:
+        print(row)
