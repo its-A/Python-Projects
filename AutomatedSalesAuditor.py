@@ -1,3 +1,12 @@
+'''Your tasks are:
+
+1.Create a list of sales values: [25.50, "error", 40.00, 15.75, "missing", 100.00].
+2. Write a function called clean_and_sum that takes a list as an input.
+3. Inside the function, use a loop to iterate through the list.
+4. Use try-except to skip any value that cannot be converted to a float.
+5. Calculate the total sales and the average sale price.
+6. Return a dictionary containing the total and the average.'''
+
 # 1. Create your raw_sales list
 raw_sales = [25.50,"error",40.00, 15.75, "missing",100.00]
 
