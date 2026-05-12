@@ -1,0 +1,78 @@
+'''---Example 1: Square Root with math.sqrt()\n'''
+
+import math
+
+area_in_sq_meters = 144
+side_length = math.sqrt(area_in_sq_meters)
+
+print(f"The area is {area_in_sq_meters} sq. meters.")
+print(f"The side length of the square is {side_length} meters.")
+
+'''---Example 2: Using numpy.sqrt() for Multiple Values\n'''
+import numpy as np
+
+# A list of variance values
+variances = [0.25, 1.44, 4.0]
+
+# Calculate square roots for all values at once
+std_deviations = np.sqrt(variances)
+
+print(f"Original variances: {variances}")
+print(f"Calculated standard deviations: {std_deviations}")
+
+'''---Example 3: Rounding Up with math.ceil()\n'''
+import math
+
+items_to_ship = 101
+items_per_container = 20
+
+containers_needed_float = items_to_ship / items_per_container
+containers_needed_int = math.ceil(containers_needed_float)
+
+print(f"Exact calculation: {containers_needed_float} containers")
+print(f"Containers to order (Ceiling): {containers_needed_int}")
+
+'''---Example 4: Processing Data in Batches\n'''
+import math
+
+total_records = 10573
+records_per_batch = 500
+
+exact_batches = total_records / records_per_batch
+batches_needed = math.ceil(exact_batches)
+
+print(f"Total Records: {total_records}")
+print(f"Exact Batches Needed: {exact_batches:.3f}")
+print(f"Batches Required (Rounded Up): {batches_needed}")
+
+'''---Example 5: Rounding Down with math.floor()\n'''
+import math
+
+days_of_service = 1900
+years_of_service_float = days_of_service / 365.25
+completed_years = math.floor(years_of_service_float)
+
+print(f"Exact years of service: {years_of_service_float:.2f}")
+print(f"Completed full years of service (Floor): {completed_years}")
+'''The employee has worked for about 5.20 years, but only 5 full years have been completed. In this kind of situation, math.floor() gives the most useful answer'''
+
+
+'''---Example 6: Combining Square Root, Floor, and Ceiling\n'''
+import math
+
+# Customer spending data
+customer_spending = [150.50, 88.00, 250.75, 55.20, 399.99]
+
+print("--- Customer Spending Tier Analysis ---")
+print(f"{'Original Spending':<20} | {'Score':<15} | {'Lower Tier':<15} | {'Upper Tier':<15}")
+print("-" * 75)
+
+for amount in customer_spending:
+    # Step 1: Calculate score using square root
+    score = math.sqrt(amount)
+    
+    # Step 2: Assign lower and upper tiers
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    
+    print(f"${amount:<19.2f} | {score:<15.2f} | {lower:<15} | {upper:<15}")
