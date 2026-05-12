@@ -1,0 +1,55 @@
+
+'''--- Example 1: Trend Analysis ---'''
+sales = [120, 135, 150, 180]
+quarters = ["Q1", "Q2", "Q3", "Q4"]
+
+print("--- Sales Trend Analysis ---")
+
+for i in range(1, len(sales)):
+    if sales[i] > sales[i - 1]:
+        print(f"From {quarters[i-1]} to {quarters[i]}, sales GREW from {sales[i-1]}k to {sales[i]}k.")
+    elif sales[i] < sales[i - 1]:
+        print(f"From {quarters[i-1]} to {quarters[i]}, sales FELL from {sales[i-1]}k to {sales[i]}k.")
+    else:
+        print(f"From {quarters[i-1]} to {quarters[i]}, sales stayed the SAME at {sales[i]}k.")
+
+
+'''--- Example 2: Proportion Analysis ---'''        
+market_share = {"Brand A": 45, "Brand B": 30, "Brand C": 25}
+
+total = sum(market_share.values())
+
+print("--- Market Share Analysis ---")
+
+for brand, share in market_share.items():
+    proportion = (share / total) * 100
+    print(f"{brand} makes up {proportion:.1f}% of the market.")
+
+leader = max(market_share, key=market_share.get)
+print(f"\nCONCLUSION: {leader} is the largest market.")
+
+'''Example 3: Comparison Analysis ---'''
+scores = {
+    "Alice": [85, 90, 78],
+    "Bob": [88, 82, 95],
+    "Charlie": [80, 85, 88]
+}
+
+subjects = ["Math", "Science", "English"]
+
+print("--- Comparison of Student Scores ---")
+
+for i in range(len(subjects)):
+    subject = subjects[i]
+    
+    highest_scorer = ""
+    top_score = 0
+    
+    for student in scores:
+        score = scores[student][i]
+        
+        if score > top_score:
+            top_score = score
+            highest_scorer = student
+    
+    print(f"For {subject}, the top performer was {highest_scorer} with a score of {top_score}.")
