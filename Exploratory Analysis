@@ -1,0 +1,247 @@
+#sample dataset
+student_data = [
+    {'student_id': 'S01', 'major': 'Physics', 'exam_1': 85, 'exam_2': 88, 'final_project': 92},
+    {'student_id': 'S02', 'major': 'Chemistry', 'exam_1': 91, 'exam_2': 89, 'final_project': 94},
+    {'student_id': 'S03', 'major': 'Physics', 'exam_1': 78, 'exam_2': 82, 'final_project': 80},
+    {'student_id': 'S04', 'major': 'Engineering', 'exam_1': 95, 'exam_2': 98, 'final_project': 99},
+    {'student_id': 'S05', 'major': 'Chemistry', 'exam_1': 88, 'exam_2': None, 'final_project': 91},
+    {'student_id': 'S06', 'major': 'Physics', 'exam_1': 65, 'exam_2': 70, 'final_project': 72}
+]
+
+for student in student_data:
+    print(student)
+
+'''Step 1: Define the Questions
+What does overall student performance look like?
+Are there any missing values or data quality issues?
+How many students belong to each major?
+Which students have the highest average performance?
+Are there any unusual or suspicious scores?
+Is there a relationship between Exam 1 and the Final Project?'''
+
+
+'''Step 2: Prepare & Inspect the Data'''
+
+cleaned_data = []
+missing_value_count = 0
+
+for student in student_data:
+    if student['exam_2'] is None:
+        student['exam_2'] = student['exam_1']
+        missing_value_count += 1
+
+    total_score = student['exam_1'] + student['exam_2'] + student['final_project']
+    student['average_score'] = round(total_score / 3, 2)
+
+    cleaned_data.append(student)
+
+print("Initial Inspection & Preparation:")
+print(f"Found and imputed {missing_value_count} missing value(s).")
+print("Added 'average_score' to each record.")
+
+
+'''Step 3: Count Categories & Understand Composition'''
+major_counts = {}
+
+for student in cleaned_data:
+    major = student['major']
+    if major not in major_counts:
+        major_counts[major] = 0
+    major_counts[major] += 1
+
+print("Student Count per Major:")
+for major, count in major_counts.items():
+    print(f"- {major}: {count} student(s)")
+
+
+'''Step 4: Sort and Filter the Data'''
+sorted_by_score = sorted(cleaned_data, key=lambda s: s['average_score'], reverse=True)
+
+print("Top 3 Students by Average Score:")
+for student in sorted_by_score[:3]:
+    print(f"- {student['student_id']} (Major: {student['major']}): {student['average_score']}")
+
+physics_students = []
+
+for student in cleaned_data:
+    if student['major'] == 'Physics':
+        physics_students.append(student)
+
+print("Analysis of Physics Majors Only:")
+for student in physics_students:
+    print(f"- {student['student_id']}: {student['average_score']}")
+
+
+'''Step 5: Detect Outliers with NumPy'''
+import numpy as np
+
+project_scores = [s['final_project'] for s in cleaned_data]
+
+mean_score = np.mean(project_scores)
+std_dev = np.std(project_scores)
+outlier_threshold = 1.5
+
+print(f"Outlier Detection in Final Project Scores (Mean={mean_score:.2f}, StdDev={std_dev:.2f}):")
+
+outliers = []
+
+for student in cleaned_data:
+    score = student['final_project']
+    z_score = (score - mean_score) / std_dev
+
+    if abs(z_score) > outlier_threshold:
+        outliers.append(student)
+        print(f"- Found Outlier: Student {student['student_id']} with score {score} (Z-score: {z_score:.2f})")
+
+if not outliers:
+    print("- No significant outliers found based on the threshold.")
+
+
+'''Step 6: Check Relationships with Correlation'''
+import numpy as np
+
+exam_1_scores = [s['exam_1'] for s in cleaned_data]
+final_project_scores = [s['final_project'] for s in cleaned_data]
+
+correlation_matrix = np.corrcoef(exam_1_scores, final_project_scores)
+correlation_coefficient = correlation_matrix[0, 1]
+
+print("Correlation between Exam 1 and Final Project:")
+print(f"Correlation Coefficient: {correlation_coefficient:.4f}")
+
+if correlation_coefficient > 0.7:
+    print("Interpretation: Strong positive correlation.")
+elif correlation_coefficient > 0.4:
+    print("Interpretation: Moderate positive correlation.")
+elif correlation_coefficient < -0.4:
+    print("Interpretation: Moderate negative correlation.")
+else:
+    print("Interpretation: Weak or no correlation.")
+
+
+import numpy as np
+
+# Step 0: Define the dataset
+student_data = [
+    {'student_id': 'S01', 'major': 'Physics', 'exam_1': 85, 'exam_2': 88, 'final_project': 92},
+    {'student_id': 'S02', 'major': 'Chemistry', 'exam_1': 91, 'exam_2': 89, 'final_project': 94},
+    {'student_id': 'S03', 'major': 'Physics', 'exam_1': 78, 'exam_2': 82, 'final_project': 80},
+    {'student_id': 'S04', 'major': 'Engineering', 'exam_1': 95, 'exam_2': 98, 'final_project': 99},
+    {'student_id': 'S05', 'major': 'Chemistry', 'exam_1': 88, 'exam_2': None, 'final_project': 91},
+    {'student_id': 'S06', 'major': 'Physics', 'exam_1': 65, 'exam_2': 70, 'final_project': 72}
+]
+
+print("=== Exploratory Data Analysis: Student Performance ===\n")
+
+# Step 1: Define the questions
+print("Step 1: Initial Questions")
+print("- What is the overall performance of the students?")
+print("- Are there any missing values?")
+print("- How many students are in each major?")
+print("- Who are the top performers?")
+print("- Are there any outliers?")
+print("- Is there a relationship between exam_1 and final_project?\n")
+
+# Step 2: Prepare and inspect the data
+cleaned_data = []
+missing_value_count = 0
+
+for student in student_data:
+    if student['exam_2'] is None:
+        student['exam_2'] = student['exam_1']
+        missing_value_count += 1
+
+    total_score = student['exam_1'] + student['exam_2'] + student['final_project']
+    student['average_score'] = round(total_score / 3, 2)
+
+    cleaned_data.append(student)
+
+print("Step 2: Initial Inspection & Preparation")
+print(f"Found and imputed {missing_value_count} missing value(s).")
+print("Added 'average_score' to each record.\n")
+
+# Step 3: Count frequencies by major
+major_counts = {}
+
+for student in cleaned_data:
+    major = student['major']
+    if major not in major_counts:
+        major_counts[major] = 0
+    major_counts[major] += 1
+
+print("Step 3: Student Count per Major")
+for major, count in major_counts.items():
+    print(f"- {major}: {count} student(s)")
+print()
+
+# Step 4a: Sort by average score
+sorted_by_score = sorted(cleaned_data, key=lambda s: s['average_score'], reverse=True)
+
+print("Step 4a: Top 3 Students by Average Score")
+for student in sorted_by_score[:3]:
+    print(f"- {student['student_id']} (Major: {student['major']}): {student['average_score']}")
+print()
+
+# Step 4b: Filter Physics majors
+physics_students = []
+
+for student in cleaned_data:
+    if student['major'] == 'Physics':
+        physics_students.append(student)
+
+print("Step 4b: Analysis of Physics Majors Only")
+for student in physics_students:
+    print(f"- {student['student_id']}: {student['average_score']}")
+print()
+
+# Step 5: Detect outliers in final project scores
+project_scores = [s['final_project'] for s in cleaned_data]
+
+mean_score = np.mean(project_scores)
+std_dev = np.std(project_scores)
+outlier_threshold = 1.5
+
+print(f"Step 5: Outlier Detection in Final Project Scores (Mean={mean_score:.2f}, StdDev={std_dev:.2f})")
+
+outliers = []
+
+for student in cleaned_data:
+    score = student['final_project']
+    z_score = (score - mean_score) / std_dev
+
+    if abs(z_score) > outlier_threshold:
+        outliers.append(student)
+        print(f"- Found Outlier: Student {student['student_id']} with score {score} (Z-score: {z_score:.2f})")
+
+if not outliers:
+    print("- No significant outliers found based on the threshold.")
+print()
+
+# Step 6: Correlation analysis
+exam_1_scores = [s['exam_1'] for s in cleaned_data]
+final_project_scores = [s['final_project'] for s in cleaned_data]
+
+correlation_matrix = np.corrcoef(exam_1_scores, final_project_scores)
+correlation_coefficient = correlation_matrix[0, 1]
+
+print("Step 6: Correlation between Exam 1 and Final Project")
+print(f"Correlation Coefficient: {correlation_coefficient:.4f}")
+
+if correlation_coefficient > 0.7:
+    print("Interpretation: Strong positive correlation.")
+elif correlation_coefficient > 0.4:
+    print("Interpretation: Moderate positive correlation.")
+elif correlation_coefficient < -0.4:
+    print("Interpretation: Moderate negative correlation.")
+else:
+    print("Interpretation: Weak or no correlation.")
+print()
+
+# Step 7: Final summary
+print("Step 7: Summary of Findings")
+print("- The dataset contains students from multiple majors.")
+print("- One missing value was found and imputed.")
+print("- An average score was calculated for each student.")
+print("- The dataset includes both top performers and lower-performing students.")
+print("- Outlier detection helps identify unusual scores that may need attention.")
+print("- Correlation analysis shows whether performance is consistent across assessments.")
