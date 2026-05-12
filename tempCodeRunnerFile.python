@@ -1,0 +1,6 @@
+from collections import Counter
+
+responses = ["apple", "banana", "apple", "orange", "banana", "banana"]
+
+counts = Counter(responses)    # Just one line to get all frequencies!
+print(counts)

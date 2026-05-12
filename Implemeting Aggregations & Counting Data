@@ -1,0 +1,99 @@
+'''---Example 1: Aggregating Data with Built-in Functions\n'''
+# Sample dataset
+sales_figures = [120, 340, 560, 230, 450, 670, 90]
+
+print(f"Original Sales Data: {sales_figures}\n")
+
+# Aggregation functions
+number_of_days = len(sales_figures)
+total_sales = sum(sales_figures)
+lowest_sale = min(sales_figures)
+highest_sale = max(sales_figures)
+
+print(f"Sales were recorded over {number_of_days} days.")
+print(f"Total Sales: ${total_sales}")
+print(f"Lowest sale: ${lowest_sale}")
+print(f"Highest sale: ${highest_sale}")
+
+
+sales_figures = [120, 340, 560, 230, 450, 670, 90]
+
+# Calculating the average sale
+average_sale = sum(sales_figures) / len(sales_figures)
+
+# Calculating the data range
+sales_range = max(sales_figures) - min(sales_figures)
+
+print(f"Average Daily Sale: ${average_sale:.2f}")
+print(f"Range of Sales: ${sales_range}")
+
+
+'''---Example 2: Counting Values in Data\n'''
+
+responses = ["apple", "banana", "apple", "orange", "banana", "banana"]
+
+print(responses.count("apple")) #output will be 2
+
+'''---Using DictionariesFrequency Counting\n'''
+#list contains raw categorical data with several repeating values
+responses = ["apple", "banana", "apple", "orange", "banana", "banana"]
+
+frequency = {} #The Empty Dictionary – frequency = {} is initialized to store our results, where the keys will be the item names and the values will be their counts.
+
+for item in responses:
+    frequency[item] = frequency.get(item, 0) + 1
+#frequency.get(item,0) looks for the item in the dictionary > finds it & returns the current count
+#by adding +1 to that result, the code either starts a new counter at 1 or increments the existing counter
+
+print(frequency)
+
+'''---Creating a Reusable Function for Counting\n'''
+def count_frequencies(data_list):
+    result = {}
+    for item in data_list:
+        result[item] = result.get(item, 0) + 1
+    return result
+#allows you use the same logic for any dataset
+
+
+'''---Counting Data from Tuples\n'''
+def count_frequencies(data_list):
+    result = {}
+    for item in data_list:
+        result[item] = result.get(item, 0) + 1
+    return result
+
+
+people = [("Alice", "Paris"), ("Bob", "London"), ("Alice", "Paris")]
+
+names = [name for name, city in people]
+print(count_frequencies(names))
+
+
+'''---Example 3: collections.Counter Function  \n'''
+'''regular counter example'''
+from collections import Counter
+
+responses = ["apple", "banana", "apple", "orange", "banana", "banana"]
+
+counts = Counter(responses)    # Just one line to get all frequencies!
+print(counts)
+
+'''Analyzing Tuple Data with Counter'''
+from collections import Counter
+
+# Each tuple contains (name, city)
+people = [("Alice", "Paris"), ("Bob", "London"), ("Alice", "Paris"),
+          ("Clara", "Berlin"), ("Alice", "London"), ("Bob", "London")]
+
+# Counting occurrences of each person (name)
+names = [name for name, city in people]
+name_frequencies = Counter(names)
+print(f"Name Frequencies: {name_frequencies}")
+
+# Counting occurrences of each city
+cities = [city for name, city in people]
+city_frequencies = Counter(cities)
+print(f"City Frequencies: {city_frequencies}")
+
+
